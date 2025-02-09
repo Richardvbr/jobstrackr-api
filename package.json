@@ -13,9 +13,6 @@
   },
   "keywords": [],
   "license": "ISC",
-  "_moduleAliases": {
-    "@root": "./src"
-  },
   "dependencies": {
     "@supabase/supabase-js": "^2.48.1",
     "cookie-parser": "^1.4.7",
@@ -24,7 +21,6 @@
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^9.0.2",
-    "module-alias": "^2.2.3",
     "nodemon": "^3.1.9"
   },
   "devDependencies": {
