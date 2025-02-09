@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 require("express-async-errors");
 const cors_2 = require("@/config/cors");
 const error_middleware_1 = __importDefault(require("@/middlewares/error.middleware"));
+const auth_middleware_1 = __importDefault(require("@/middlewares/auth.middleware"));
 const user_route_1 = __importDefault(require("@/routes/user.route"));
 const app = (0, express_1.default)();
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 4000;
@@ -19,7 +20,7 @@ app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use(error_middleware_1.default);
 // Routes
-app.use('/api/v1/users', user_route_1.default);
+app.use('/api/v1/users', auth_middleware_1.default, user_route_1.default);
 app.get('/', (req, res) => {
     res.send('JobsTrackr API');
 });

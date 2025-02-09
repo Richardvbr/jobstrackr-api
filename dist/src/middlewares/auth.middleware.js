@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const supabase_1 = require("@/config/supabase");
 const env_1 = require("@/config/env");
-function authorize(req, res, next) {
+function requireAuth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let token = '';
@@ -46,4 +46,4 @@ function authorize(req, res, next) {
         }
     });
 }
-exports.default = authorize;
+exports.default = requireAuth;

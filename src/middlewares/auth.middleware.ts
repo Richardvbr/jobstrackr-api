@@ -1,12 +1,12 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import type { Request } from 'express';
 import { supabase } from '@/config/supabase';
 import { JWT_SECRET } from '@/config/env';
 import { UserData } from '@/models/user.model';
 
 export type CustomRequest = Request & { user: UserData; token: string };
 
-async function authorize(req: CustomRequest, res: any, next: any) {
+async function requireAuth(req: CustomRequest, res: any, next: any) {
   try {
     let token = '';
 
@@ -47,4 +47,4 @@ async function authorize(req: CustomRequest, res: any, next: any) {
   }
 }
 
-export default authorize;
+export default requireAuth;

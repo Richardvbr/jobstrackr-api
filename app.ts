@@ -5,6 +5,7 @@ import 'express-async-errors';
 
 import { corsOptions } from '@/config/cors';
 import errorMiddleware from '@/middlewares/error.middleware';
+import requireAuth from '@/middlewares/auth.middleware';
 import userRouter from '@/routes/user.route';
 
 const app: Application = express();
@@ -17,7 +18,7 @@ app.use(cookieParser());
 app.use(errorMiddleware);
 
 // Routes
-app.use('/api/v1/users', userRouter);
+app.use('/api/v1/users', requireAuth, userRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('JobsTrackr API');
