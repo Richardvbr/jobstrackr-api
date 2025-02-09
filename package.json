@@ -1,7 +1,10 @@
 {
   "name": "jobstrackr-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "JobsTrackr-api",
+  "author": "Richard van Brunschot",
+  "repository": "https://github.com/Richardvbr/jobstrackr-api",
+  "private": false,
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
@@ -9,7 +12,6 @@
     "dev": "nodemon app.ts"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.48.1",
