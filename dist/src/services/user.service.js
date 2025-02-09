@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUsers = getUsers;
 exports.getUser = getUser;
-const supabase_1 = require("@/config/supabase");
+const supabase_1 = require("../config/supabase");
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const { data, error } = yield supabase_1.supabase.from('users').select('*');

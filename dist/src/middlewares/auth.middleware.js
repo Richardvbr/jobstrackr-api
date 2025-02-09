@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const supabase_1 = require("@/config/supabase");
-const env_1 = require("@/config/env");
+const supabase_1 = require("../config/supabase");
+const env_1 = require("../config/env");
 function requireAuth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

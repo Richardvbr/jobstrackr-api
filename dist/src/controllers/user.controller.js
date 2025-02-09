@@ -44,7 +44,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUsers = getUsers;
 exports.getUser = getUser;
-const UserService = __importStar(require("@/services/user.service"));
+const UserService = __importStar(require("../services/user.service"));
 function getUsers(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

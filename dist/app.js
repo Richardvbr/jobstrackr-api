@@ -8,10 +8,10 @@ const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 require("express-async-errors");
-const cors_2 = require("@/config/cors");
-const error_middleware_1 = __importDefault(require("@/middlewares/error.middleware"));
-const auth_middleware_1 = __importDefault(require("@/middlewares/auth.middleware"));
-const user_route_1 = __importDefault(require("@/routes/user.route"));
+const cors_2 = require("./src/config/cors");
+const error_middleware_1 = __importDefault(require("./src/middlewares/error.middleware"));
+const auth_middleware_1 = __importDefault(require("./src/middlewares/auth.middleware"));
+const user_route_1 = __importDefault(require("./src/routes/user.route"));
 const app = (0, express_1.default)();
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 4000;
 // Middleware
