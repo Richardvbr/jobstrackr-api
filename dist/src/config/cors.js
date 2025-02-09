@@ -1,12 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.corsOptions = void 0;
-const whitelist = [
-    'http://localhost:3000',
-    'http://localhost:4000',
-    'https://portal.jobstrackr.app',
-    'https://jobstrackr-vite.pages.dev',
-];
+const env_1 = require("./env");
+const whitelist = env_1.CORS_WHITELIST.split(',');
 exports.corsOptions = {
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
