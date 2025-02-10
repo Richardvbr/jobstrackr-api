@@ -9,9 +9,7 @@
   "scripts": {
     "build": "npx tsc && tsc-alias -p tsconfig.json",
     "start": "node dist/app.js",
-    "dev": "nodemon -r tsconfig-paths/register app.ts",
-    "docker-build": "docker build -t jobstrackr-api .",
-    "docker-compose": "docker-compose up"
+    "dev": "nodemon -r tsconfig-paths/register app.ts"
   },
   "keywords": [],
   "license": "ISC",
