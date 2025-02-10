@@ -1,9 +1,3 @@
-import { Json } from './supabase.model';
+import type { Database } from './supabase.model';
 
-export type User = {
-  id: string;
-  email: string | null;
-  created_at: string;
-  app_metadata: Json | null;
-  user_metadata: Json | null;
-} | null;
+export type User = Database['public']['Tables']['users']['Row'] | null;

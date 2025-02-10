@@ -12,6 +12,7 @@ const cors_2 = require("./src/config/cors");
 const error_middleware_1 = __importDefault(require("./src/middlewares/error.middleware"));
 const auth_middleware_1 = __importDefault(require("./src/middlewares/auth.middleware"));
 const user_route_1 = __importDefault(require("./src/routes/user.route"));
+const application_route_1 = __importDefault(require("./src/routes/application.route"));
 const app = (0, express_1.default)();
 const PORT = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 4000;
 // Middleware
@@ -21,6 +22,7 @@ app.use((0, cookie_parser_1.default)());
 app.use(error_middleware_1.default);
 // Routes
 app.use('/api/v1/users', auth_middleware_1.default, user_route_1.default);
+app.use('/api/v1/applications', auth_middleware_1.default, application_route_1.default);
 app.get('/', (req, res) => {
     res.send('JobsTrackr API');
 });

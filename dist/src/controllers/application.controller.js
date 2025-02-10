@@ -42,25 +42,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = getUsers;
-exports.getUser = getUser;
-const UserService = __importStar(require("../services/user.service"));
-function getUsers(req, res, next) {
+exports.getApplications = getApplications;
+exports.getApplication = getApplication;
+const ApplicationService = __importStar(require("../services/application.service"));
+function getApplications(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const users = yield UserService.getUsers();
-            res.status(200).json({ success: true, data: users });
+            const applications = yield ApplicationService.getApplications();
+            res.status(200).json({ success: true, data: applications });
         }
         catch (error) {
             next(error);
         }
     });
 }
-function getUser(req, res, next) {
+function getApplication(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield UserService.getUser(req);
-            res.status(200).json({ success: true, data: user });
+            const application = yield ApplicationService.getApplication(req);
+            res.status(200).json({ success: true, data: application });
         }
         catch (error) {
             next(error);

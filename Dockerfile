@@ -1,5 +1,5 @@
 # Stage 1: Build project
-FROM node:18-alpine AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create production image
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 

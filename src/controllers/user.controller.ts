@@ -3,9 +3,9 @@ import * as UserService from '@/services/user.service';
 
 export async function getUsers(req: any, res: Response, next: NextFunction) {
   try {
-    const user = await UserService.getUsers();
+    const users = await UserService.getUsers();
 
-    res.status(200).json({ success: true, data: user });
+    res.status(200).json({ success: true, data: users });
   } catch (error) {
     next(error);
   }

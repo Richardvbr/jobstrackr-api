@@ -7,6 +7,7 @@ import { corsOptions } from '@/config/cors';
 import errorMiddleware from '@/middlewares/error.middleware';
 import requireAuth from '@/middlewares/auth.middleware';
 import userRouter from '@/routes/user.route';
+import applicationsRouter from '@/routes/application.route';
 
 const app: Application = express();
 const PORT = process.env.PORT ?? 4000;
@@ -19,6 +20,7 @@ app.use(errorMiddleware);
 
 // Routes
 app.use('/api/v1/users', requireAuth, userRouter);
+app.use('/api/v1/applications', requireAuth, applicationsRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('JobsTrackr API');
