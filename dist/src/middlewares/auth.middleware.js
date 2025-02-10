@@ -25,9 +25,16 @@ function requireAuth(req, res, next) {
             }
             if (!token)
                 return res.status(401).json({ message: 'Unauthorized: no token provided' });
-            const decoded = jsonwebtoken_1.default.verify(token, env_1.JWT_SECRET);
-            if (decoded.exp && decoded.exp < Date.now() / 1000) {
-                return res.status(401).json({ message: 'Unauthorized: token expired' });
+            try {
+                jsonwebtoken_1.default.verify(token, env_1.JWT_SECRET, {
+                    algorithms: ['HS256'],
+                    issuer: env_1.JWT_ISSUER,
+                });
+            }
+            catch (error) {
+                console.error('Token verification failed:', error);
+                const errorMessage = error instanceof Error ? error.message : 'Unauthorized: invalid token';
+                return res.status(401).json({ message: errorMessage });
             }
             // Check for user
             const { data: { user }, error: getUserError, } = yield supabase_1.supabase.auth.getUser(token);
