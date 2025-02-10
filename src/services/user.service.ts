@@ -1,6 +1,6 @@
 import { supabase } from '@/config/supabase';
 import type { CustomRequest } from '@/middlewares/auth.middleware';
-import type { UserData } from '@/models/user.model';
+import type { User } from '@/models/user.model';
 
 export async function getUsers() {
   const { data, error } = await supabase.from('users').select('*');
@@ -9,7 +9,7 @@ export async function getUsers() {
     throw new Error(error.message);
   }
 
-  return data as UserData[];
+  return data as User[];
 }
 
 export async function getUser(req: CustomRequest) {
@@ -21,5 +21,5 @@ export async function getUser(req: CustomRequest) {
     throw new Error(error.message);
   }
 
-  return data as UserData;
+  return data as User;
 }

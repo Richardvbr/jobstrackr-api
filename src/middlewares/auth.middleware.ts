@@ -1,10 +1,10 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import type { Request } from 'express';
 import { supabase } from '@/config/supabase';
-import { JWT_SECRET } from '@/config/env';
-import { UserData } from '@/models/user.model';
+import { JWT_ISSUER, JWT_SECRET } from '@/config/env';
+import type { User } from '@/models/user.model';
 
-export type CustomRequest = Request & { user: UserData; token: string };
+export type CustomRequest = Request & { user: User; token: string };
 
 async function requireAuth(req: CustomRequest, res: any, next: any) {
   try {
@@ -17,10 +17,16 @@ async function requireAuth(req: CustomRequest, res: any, next: any) {
 
     if (!token) return res.status(401).json({ message: 'Unauthorized: no token provided' });
 
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    try {
+      jwt.verify(token, JWT_SECRET, {
+        algorithms: ['HS256'],
+        issuer: JWT_ISSUER,
+      }) as JwtPayload;
+    } catch (error) {
+      console.error('Token verification failed:', error);
 
-    if (decoded.exp && decoded.exp < Date.now() / 1000) {
-      return res.status(401).json({ message: 'Unauthorized: token expired' });
+      const errorMessage = error instanceof Error ? error.message : 'Unauthorized: invalid token';
+      return res.status(401).json({ message: errorMessage });
     }
 
     // Check for user

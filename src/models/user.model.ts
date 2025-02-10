@@ -1,6 +1,6 @@
 import { Json } from './supabase.model';
 
-export type UserData = {
+export type User = {
   id: string;
   email: string | null;
   created_at: string;
