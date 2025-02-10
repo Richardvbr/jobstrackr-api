@@ -3,7 +3,7 @@ import * as ApplicationService from '@/services/application.service';
 
 export async function getApplications(req: any, res: Response, next: NextFunction) {
   try {
-    const applications = await ApplicationService.getApplications();
+    const applications = await ApplicationService.getApplications(req);
 
     res.status(200).json({ success: true, data: applications });
   } catch (error) {
