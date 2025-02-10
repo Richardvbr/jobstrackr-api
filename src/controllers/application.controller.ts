@@ -5,7 +5,7 @@ export async function getApplications(req: any, res: Response, next: NextFunctio
   try {
     const applications = await ApplicationService.getApplications(req);
 
-    res.status(200).json({ success: true, data: applications });
+    res.status(200).json({ data: applications });
   } catch (error) {
     next(error);
   }
@@ -15,7 +15,7 @@ export async function getApplication(req: any, res: Response, next: NextFunction
   try {
     const application = await ApplicationService.getApplication(req);
 
-    res.status(200).json({ success: true, data: application });
+    res.status(200).json({ data: application });
   } catch (error) {
     next(error);
   }
