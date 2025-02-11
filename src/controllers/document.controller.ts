@@ -25,3 +25,16 @@ export async function getDocument(req: any, res: Response, next: NextFunction) {
     next(error);
   }
 }
+
+export async function addDocument(req: any, res: Response, next: NextFunction) {
+  const body = req.body;
+  const { id } = req.user ?? {};
+
+  try {
+    const document = await DocumentService.addDocument(id, body);
+
+    res.status(201).json({ data: document });
+  } catch (error) {
+    next(error);
+  }
+}

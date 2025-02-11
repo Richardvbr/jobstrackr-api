@@ -34,7 +34,7 @@ export async function newApplication(req: any, res: Response, next: NextFunction
   try {
     const application = await ApplicationService.newApplication(id, applicationBody);
 
-    res.status(200).json({ data: application });
+    res.status(201).json({ data: application });
   } catch (error) {
     next(error);
   }
