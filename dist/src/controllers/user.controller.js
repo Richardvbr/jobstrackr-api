@@ -49,7 +49,7 @@ function getUsers(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const users = yield UserService.getUsers();
-            res.status(200).json({ success: true, data: users });
+            res.status(200).json({ data: users });
         }
         catch (error) {
             next(error);
@@ -60,7 +60,7 @@ function getUser(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield UserService.getUser(req);
-            res.status(200).json({ success: true, data: user });
+            res.status(200).json({ data: user });
         }
         catch (error) {
             next(error);

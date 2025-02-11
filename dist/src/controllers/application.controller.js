@@ -51,7 +51,7 @@ function getApplications(req, res, next) {
         const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
             const applications = yield ApplicationService.getApplications(id);
-            res.status(200).json({ success: true, data: applications });
+            res.status(200).json({ data: applications });
         }
         catch (error) {
             next(error);
@@ -65,7 +65,7 @@ function getApplication(req, res, next) {
         const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
             const application = yield ApplicationService.getApplication(id, applicationId);
-            res.status(200).json({ success: true, data: application });
+            res.status(200).json({ data: application });
         }
         catch (error) {
             next(error);
