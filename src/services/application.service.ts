@@ -1,10 +1,7 @@
 import { supabase } from '@/config/supabase';
-import type { CustomRequest } from '@/middlewares/auth.middleware';
-import { Application } from '@/models/application.model';
+import type { Application } from '@/models/application.model';
 
-export async function getApplications(req: CustomRequest) {
-  const { id } = req.user ?? {};
-
+export async function getApplications(id: string) {
   const { data, error } = await supabase
     .from('applications')
     .select()
@@ -18,10 +15,7 @@ export async function getApplications(req: CustomRequest) {
   return data as Application[];
 }
 
-export async function getApplication(req: CustomRequest) {
-  const applicationId = req.params.applicationId;
-  const { id } = req.user ?? {};
-
+export async function getApplication(id: string, applicationId: string) {
   const { data, error } = await supabase
     .from('applications')
     .select()

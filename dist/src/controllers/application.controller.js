@@ -47,8 +47,10 @@ exports.getApplication = getApplication;
 const ApplicationService = __importStar(require("../services/application.service"));
 function getApplications(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
+        const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
-            const applications = yield ApplicationService.getApplications();
+            const applications = yield ApplicationService.getApplications(id);
             res.status(200).json({ success: true, data: applications });
         }
         catch (error) {
@@ -58,8 +60,11 @@ function getApplications(req, res, next) {
 }
 function getApplication(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
+        const applicationId = req.params.applicationId;
+        const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
-            const application = yield ApplicationService.getApplication(req);
+            const application = yield ApplicationService.getApplication(id, applicationId);
             res.status(200).json({ success: true, data: application });
         }
         catch (error) {
