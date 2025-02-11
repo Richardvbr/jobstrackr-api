@@ -28,16 +28,11 @@ export async function getApplication(req: any, res: Response, next: NextFunction
 }
 
 export async function newApplication(req: any, res: Response, next: NextFunction) {
-  const applicationId = req.params.applicationId;
   const applicationBody: Application = req.body;
   const { id } = req.user ?? {};
 
   try {
-    const application = await ApplicationService.updateApplication(
-      id,
-      applicationId,
-      applicationBody
-    );
+    const application = await ApplicationService.newApplication(id, applicationBody);
 
     res.status(200).json({ data: application });
   } catch (error) {
