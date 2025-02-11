@@ -12,11 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getApplications = getApplications;
 exports.getApplication = getApplication;
 const supabase_1 = require("../config/supabase");
-function getApplications() {
+function getApplications(id) {
     return __awaiter(this, void 0, void 0, function* () {
         const { data, error } = yield supabase_1.supabase
             .from('applications')
             .select()
+            .eq('user_id', id)
             .order('created_at', { ascending: false });
         if (error) {
             throw new Error(error.message);
@@ -24,13 +25,13 @@ function getApplications() {
         return data;
     });
 }
-function getApplication(req) {
+function getApplication(id, applicationId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const applicationId = req.params.applicationId;
         const { data, error } = yield supabase_1.supabase
             .from('applications')
             .select()
             .eq('id', applicationId)
+            .eq('user_id', id)
             .single();
         if (error) {
             throw new Error(error.message);

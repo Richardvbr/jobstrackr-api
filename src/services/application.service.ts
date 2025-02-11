@@ -1,6 +1,5 @@
 import { supabase } from '@/config/supabase';
-import type { CustomRequest } from '@/middlewares/auth.middleware';
-import { Application } from '@/models/application.model';
+import type { Application } from '@/models/application.model';
 
 export async function getApplications(id: string) {
   const { data, error } = await supabase

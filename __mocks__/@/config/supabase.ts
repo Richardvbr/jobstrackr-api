@@ -1,3 +1,4 @@
+// Mocked supabase client
 export const supabase = {
   from: jest.fn().mockReturnThis(),
   select: jest.fn().mockReturnThis(),
