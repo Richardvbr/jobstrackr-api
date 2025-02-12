@@ -1,58 +1,58 @@
-import { getApplications, getApplication } from '@/services/application.service';
+import { getDocuments, getDocument } from '@/services/document.service';
 import { supabase } from '@/config/supabase';
-import { mockApplications } from '../../__mocks__/data/application';
+import { mockDocuments } from '../../__mocks__/data/document';
 
-describe('Application Service', () => {
+describe('Document Service', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   const userId = 'user123';
-  const applicationId = '1675cad0-41d4-429a-97a9-c7964ea4692e';
+  const documentId = '7a006236-5334-489a-ab04-776d1210c0cb';
 
-  it('should fetch all applications for a user', async () => {
+  it('should fetch all documents for a user', async () => {
     const mockSupabaseQuery = {
       select: jest.fn().mockReturnThis(),
       eq: jest.fn().mockReturnThis(),
       order: jest.fn().mockResolvedValueOnce({
-        data: mockApplications,
+        data: mockDocuments,
         error: null,
       }),
     };
 
     jest.spyOn(supabase, 'from').mockReturnValue(mockSupabaseQuery);
 
-    const applications = await getApplications(userId);
+    const documents = await getDocuments(userId);
 
-    expect(supabase.from).toHaveBeenCalledWith('applications');
+    expect(supabase.from).toHaveBeenCalledWith('documents');
     expect(mockSupabaseQuery.select).toHaveBeenCalled();
     expect(mockSupabaseQuery.eq).toHaveBeenCalledWith('user_id', userId);
     expect(mockSupabaseQuery.order).toHaveBeenCalledWith('created_at', { ascending: false });
-    expect(applications).toEqual(mockApplications);
+    expect(documents).toEqual(mockDocuments);
   });
 
-  it('should fetch a single application by ID', async () => {
+  it('should fetch a single document by ID', async () => {
     const mockSupabaseQuery = {
       select: jest.fn().mockReturnThis(),
       eq: jest.fn().mockReturnThis(),
       single: jest.fn().mockResolvedValueOnce({
-        data: mockApplications[0],
+        data: mockDocuments[0],
         error: null,
       }),
     };
 
     jest.spyOn(supabase, 'from').mockReturnValue(mockSupabaseQuery);
 
-    const application = await getApplication(userId, applicationId);
+    const document = await getDocument(userId, documentId);
 
-    expect(supabase.from).toHaveBeenCalledWith('applications');
+    expect(supabase.from).toHaveBeenCalledWith('documents');
     expect(mockSupabaseQuery.select).toHaveBeenCalled();
-    expect(mockSupabaseQuery.eq).toHaveBeenCalledWith('id', applicationId);
+    expect(mockSupabaseQuery.eq).toHaveBeenCalledWith('id', documentId);
     expect(mockSupabaseQuery.eq).toHaveBeenCalledWith('user_id', userId);
-    expect(application).toEqual(mockApplications[0]);
+    expect(document).toEqual(mockDocuments[0]);
   });
 
-  it('should throw an error if fetching applications fails', async () => {
+  it('should throw an error if fetching documents fails', async () => {
     const mockSupabaseQuery = {
       select: jest.fn().mockReturnThis(),
       eq: jest.fn().mockReturnThis(),
@@ -64,10 +64,9 @@ describe('Application Service', () => {
 
     jest.spyOn(supabase, 'from').mockReturnValue(mockSupabaseQuery);
 
-    await expect(getApplications(userId)).rejects.toThrow('Database error');
+    await expect(getDocuments(userId)).rejects.toThrow('Database error');
 
-    // Optional: Verify that the methods were called as expected
-    expect(supabase.from).toHaveBeenCalledWith('applications');
+    expect(supabase.from).toHaveBeenCalledWith('documents');
     expect(mockSupabaseQuery.select).toHaveBeenCalled();
     expect(mockSupabaseQuery.eq).toHaveBeenCalledWith('user_id', userId);
     expect(mockSupabaseQuery.order).toHaveBeenCalledWith('created_at', { ascending: false });

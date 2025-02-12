@@ -42,76 +42,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplications = getApplications;
-exports.getApplication = getApplication;
-exports.newApplication = newApplication;
-exports.updateApplication = updateApplication;
-exports.deleteApplication = deleteApplication;
-const ApplicationService = __importStar(require("../services/application.service"));
-function getApplications(req, res, next) {
+exports.getDocuments = getDocuments;
+exports.getDocument = getDocument;
+exports.addDocument = addDocument;
+const DocumentService = __importStar(require("../services/document.service"));
+function getDocuments(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
-            const applications = yield ApplicationService.getApplications(id);
-            res.status(200).json({ data: applications });
+            const documents = yield DocumentService.getDocuments(id);
+            res.status(200).json({ data: documents });
         }
         catch (error) {
             next(error);
         }
     });
 }
-function getApplication(req, res, next) {
+function getDocument(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        const applicationId = req.params.applicationId;
+        const documentId = req.params.documentId;
         const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
-            const application = yield ApplicationService.getApplication(id, applicationId);
-            res.status(200).json({ data: application });
+            const document = yield DocumentService.getDocument(id, documentId);
+            res.status(200).json({ data: document });
         }
         catch (error) {
             next(error);
         }
     });
 }
-function newApplication(req, res, next) {
+function addDocument(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
-        const applicationBody = req.body;
+        const body = req.body;
         const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
         try {
-            const application = yield ApplicationService.newApplication(id, applicationBody);
-            res.status(201).json({ data: application });
-        }
-        catch (error) {
-            next(error);
-        }
-    });
-}
-function updateApplication(req, res, next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var _a;
-        const applicationId = req.params.applicationId;
-        const applicationBody = req.body;
-        const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
-        try {
-            const application = yield ApplicationService.updateApplication(id, applicationId, applicationBody);
-            res.status(200).json({ data: application });
-        }
-        catch (error) {
-            next(error);
-        }
-    });
-}
-function deleteApplication(req, res, next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var _a;
-        const applicationId = req.params.applicationId;
-        const { id } = (_a = req.user) !== null && _a !== void 0 ? _a : {};
-        try {
-            const application = yield ApplicationService.deleteApplication(id, applicationId);
-            res.status(200).json({ data: application });
+            const document = yield DocumentService.addDocument(id, body);
+            res.status(201).json({ data: document });
         }
         catch (error) {
             next(error);

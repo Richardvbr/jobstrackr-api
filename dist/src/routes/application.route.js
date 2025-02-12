@@ -5,4 +5,7 @@ const application_controller_1 = require("../controllers/application.controller"
 const applicationsRouter = (0, express_1.Router)();
 applicationsRouter.get('/', application_controller_1.getApplications);
 applicationsRouter.get('/:applicationId', application_controller_1.getApplication);
+applicationsRouter.post('/', application_controller_1.newApplication);
+applicationsRouter.put('/:applicationId', application_controller_1.updateApplication);
+applicationsRouter.delete('/:applicationId', application_controller_1.deleteApplication);
 exports.default = applicationsRouter;
