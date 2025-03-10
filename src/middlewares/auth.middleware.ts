@@ -4,19 +4,20 @@ import { supabase } from '@/config/supabase';
 import { JWT_ISSUER, JWT_SECRET } from '@/config/env';
 import type { User } from '@/models/user.model';
 
-export type CustomRequest = Request & { user: User; token: string };
+export type CustomRequest = Request & { user: User | null; token: string };
 
 async function requireAuth(req: CustomRequest, res: any, next: any) {
   try {
     let token = '';
 
-    // Handle token
+    // Check for token
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
     }
 
     if (!token) return res.status(401).json({ message: 'Unauthorized: no token provided' });
 
+    // Verify token
     try {
       jwt.verify(token, JWT_SECRET, {
         algorithms: ['HS256'],
@@ -29,22 +30,18 @@ async function requireAuth(req: CustomRequest, res: any, next: any) {
       return res.status(401).json({ message: errorMessage });
     }
 
-    // Check for user
+    // Get user from supabase auth
     const {
       data: { user },
       error: getUserError,
     } = await supabase.auth.getUser(token);
 
-    const { id } = user ?? {};
-
-    if (getUserError || !id) {
+    if (getUserError) {
       return res.status(401).json({ message: 'Unauthorized: error getting user' });
     }
 
-    const { data } = await supabase.from('users').select('*').eq('id', id).single();
-
-    // Attach user and token to request
-    req.user = data;
+    // Attach user data and token to request
+    req.user = user;
     req.token = token;
 
     next();
