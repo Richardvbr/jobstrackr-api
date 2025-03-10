@@ -19,12 +19,13 @@ function requireAuth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let token = '';
-            // Handle token
+            // Check for token
             if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
                 token = req.headers.authorization.split(' ')[1];
             }
             if (!token)
                 return res.status(401).json({ message: 'Unauthorized: no token provided' });
+            // Verify token
             try {
                 jsonwebtoken_1.default.verify(token, env_1.JWT_SECRET, {
                     algorithms: ['HS256'],
@@ -36,15 +37,13 @@ function requireAuth(req, res, next) {
                 const errorMessage = error instanceof Error ? error.message : 'Unauthorized: invalid token';
                 return res.status(401).json({ message: errorMessage });
             }
-            // Check for user
+            // Get user from supabase auth
             const { data: { user }, error: getUserError, } = yield supabase_1.supabase.auth.getUser(token);
-            const { id } = user !== null && user !== void 0 ? user : {};
-            if (getUserError || !id) {
+            if (getUserError) {
                 return res.status(401).json({ message: 'Unauthorized: error getting user' });
             }
-            const { data } = yield supabase_1.supabase.from('users').select('*').eq('id', id).single();
-            // Attach user and token to request
-            req.user = data;
+            // Attach user data and token to request
+            req.user = user;
             req.token = token;
             next();
         }
