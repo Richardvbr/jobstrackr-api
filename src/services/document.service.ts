@@ -16,11 +16,11 @@ export async function getDocuments(userId: string) {
   return data as Document[];
 }
 
-export async function getDocument(userId: string, applicationId: string) {
+export async function getDocument(userId: string, documentId: string) {
   const { data, error } = await supabase
     .from('documents')
     .select()
-    .eq('id', applicationId)
+    .eq('id', documentId)
     .eq('user_id', userId as string)
     .single();
 

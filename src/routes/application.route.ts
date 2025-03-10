@@ -11,7 +11,7 @@ const applicationsRouter = Router();
 
 applicationsRouter.get('/', getApplications);
 applicationsRouter.get('/:applicationId', getApplication);
-applicationsRouter.post('/:applicationId', newApplication);
+applicationsRouter.post('/', newApplication);
 applicationsRouter.put('/:applicationId', updateApplication);
 applicationsRouter.delete('/:applicationId', deleteApplication);
 

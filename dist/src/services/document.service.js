@@ -9,16 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApplications = getApplications;
-exports.getApplication = getApplication;
-exports.updateApplication = updateApplication;
-exports.newApplication = newApplication;
-exports.deleteApplication = deleteApplication;
+exports.getDocuments = getDocuments;
+exports.getDocument = getDocument;
+exports.addDocument = addDocument;
+const uuid_1 = require("uuid");
 const supabase_1 = require("../config/supabase");
-function getApplications(userId) {
+function getDocuments(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const { data, error } = yield supabase_1.supabase
-            .from('applications')
+            .from('documents')
             .select()
             .eq('user_id', userId)
             .order('created_at', { ascending: false });
@@ -28,12 +27,12 @@ function getApplications(userId) {
         return data;
     });
 }
-function getApplication(userId, applicationId) {
+function getDocument(userId, documentId) {
     return __awaiter(this, void 0, void 0, function* () {
         const { data, error } = yield supabase_1.supabase
-            .from('applications')
+            .from('documents')
             .select()
-            .eq('id', applicationId)
+            .eq('id', documentId)
             .eq('user_id', userId)
             .single();
         if (error) {
@@ -42,43 +41,19 @@ function getApplication(userId, applicationId) {
         return data;
     });
 }
-function updateApplication(userId, applicationId, application) {
+function addDocument(userId, body) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { error, data } = yield supabase_1.supabase
-            .from('applications')
-            .update(application)
-            .eq('id', applicationId)
-            .eq('user_id', userId)
-            .select();
+        const uniqueId = (0, uuid_1.v4)();
+        const { documentDescription, documentName, selectedApplication, file } = body;
+        // upload file
+        const { data: fileData, error: fileError } = yield supabase_1.supabase.storage
+            .from('documents')
+            .upload(`file-${documentName}-${uniqueId}`, file);
+        // Create record with path to file
+        const { error } = yield supabase_1.supabase.from('documents').insert(Object.assign({ user_id: userId, title: documentName, description: documentDescription, file_path: fileData === null || fileData === void 0 ? void 0 : fileData.path, file_type: file.type }, (selectedApplication && { application_id: selectedApplication })));
         if (error) {
             throw new Error(error.message);
         }
-        return data;
-    });
-}
-function newApplication(userId, application) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { error, data } = yield supabase_1.supabase
-            .from('applications')
-            .insert(Object.assign(Object.assign({}, application), { user_id: userId }))
-            .select();
-        if (error) {
-            throw new Error(error.message);
-        }
-        return data;
-    });
-}
-function deleteApplication(userId, applicationId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const { error, data } = yield supabase_1.supabase
-            .from('applications')
-            .delete()
-            .eq('id', applicationId)
-            .eq('user_id', userId)
-            .select();
-        if (error) {
-            throw new Error(error.message);
-        }
-        return data;
+        return fileData;
     });
 }
